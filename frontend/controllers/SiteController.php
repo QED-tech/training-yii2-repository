@@ -1,8 +1,8 @@
 <?php
 namespace frontend\controllers;
 
+use app\components\AuthHandler;
 use common\models\User;
-use frontend\components\AuthHandler;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
