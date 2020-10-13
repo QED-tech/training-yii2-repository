@@ -10,7 +10,14 @@ return [
     'id' => 'app-frontend',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language' => 'ru',
+     'name' => 'Instagram',
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'user' => [
+            'class' => 'frontend\modules\user\Module',
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
