@@ -1,9 +1,9 @@
 <?php
 
-namespace app\components;
+namespace frontend\modules\components;
 
+use frontend\modules\user\models\Auth;
 use Yii;
-use app\models\Auth;
 use frontend\models\User;
 use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
@@ -45,7 +45,7 @@ class AuthHandler
 
     /**
      * @param array $attributes
-     * @return Auth
+     * @return array|Auth|\yii\db\ActiveRecord
      */
     private function findAuth($attributes)
     {
@@ -60,7 +60,7 @@ class AuthHandler
     /**
      *
      * @param type $attributes
-     * @return User|null
+     * @return User|void|null
      */
     private function createAccount($attributes)
     {
