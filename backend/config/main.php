@@ -11,7 +11,12 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'telegram' => [
+            'class' => 'backend\modules\telegram\Module',
+        ],
+    ],
+
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',

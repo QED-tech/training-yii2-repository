@@ -4,3 +4,10 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 # Otherwise forward the request to index.php
 RewriteRule . index.php
+
+
+php_flag display_startup_errors on
+php_flag display_errors on
+php_flag html_errors on
+php_flag  log_errors on
+php_value error_log  /opt/lampp/htdocs/insta-yii2/backend/web/PHP_errors.log
