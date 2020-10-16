@@ -15,6 +15,16 @@ return [
         'telegram' => [
             'class' => 'backend\modules\telegram\Module',
         ],
+        'log' => [
+            'targets' => [
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning', 'info'],
+                    'logFile' => '@runtime/logs/log.log',
+                    'logVars' => []
+                ],
+            ]
+        ]
     ],
 
     'components' => [

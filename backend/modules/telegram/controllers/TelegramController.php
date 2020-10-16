@@ -28,16 +28,7 @@ class TelegramController extends Controller
                 TelegramMessage::handler($update);
             }
         } catch (\Exception $e) {
-            Yii::info($e->getMessage());
-
-            ob_start();
-            print_r($e->getMessage());
-            $debug = ob_get_contents();
-            ob_end_clean();
-            $fp = fopen($_SERVER['DOCUMENT_ROOT'] . '/logs/errors.logs', 'a+');
-            fwrite($fp, $debug);
-            fclose($fp);
-
+            Yii::error($e->getMessage(), 'error');
 
         } finally {
             return 'ok';

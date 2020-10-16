@@ -2,6 +2,8 @@
 namespace frontend\controllers;
 
 use frontend\models\User;
+use Redis;
+use Yii;
 use yii\web\Controller;
 
 /**
@@ -33,6 +35,10 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $users = User::find()->all();
+
+//        Yii::$app->redis->set('mykey', 'some value');
+         $key = Yii::$app->redis->get('mykey');
+         echo $key;die;
 
         return $this->render('index', compact('users'));
     }

@@ -1,9 +1,13 @@
 <?php
-
+/* @var $user frontend\models\User */
+use yii\helpers\Html;
 ?>
 
-<h3>Hello</h3>
+
+<h3>
+    <?= Html::encode($user->username) ?>
+</h3>
 
 <p>
-    It's <?= $user->username ?> page!
+    <?= $user->about ?>
 </p>

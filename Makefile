@@ -2,6 +2,9 @@ up:
 	docker-compose up -d
 stop:
 	docker-compose stop
+install:
+	docker-compose run --rm backend composer update
+
 migrate:
 	docker-compose run --rm backend yii migrate
 seed:

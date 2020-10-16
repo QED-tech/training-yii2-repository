@@ -1,3 +1,4 @@
+
 version: '3.2'
 
 services:
@@ -11,6 +12,9 @@ services:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       # Mount source-code for development
       - ./:/app
+
+  redis:
+    image: redis:latest
 
   backend:
     build: backend
