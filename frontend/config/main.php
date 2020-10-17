@@ -48,7 +48,8 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'profile/<nickname:\w+>' => 'user/profile/view'
+                'profile/<nickname:\w+>' => 'user/profile/view',
+                'subscribe/<id:\d+>' => 'user/profile/subscribe'
             ],
         ],
 

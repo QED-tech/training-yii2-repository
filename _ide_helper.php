@@ -15,6 +15,7 @@ class Yii extends \yii\BaseYii
 /**
  * @property yii\caching\FileCache $cache
  * @property Mis\IdeHelper\IdeHelper $ideHelper
+ * @property yii\redis\Connection $redis
  * @property yii\db\Connection $db
  * @property yii\swiftmailer\Mailer $mailer
  * @property yii\authclient\Collection $authClientCollection

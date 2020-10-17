@@ -34,11 +34,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $users = User::find()->all();
 
-//        Yii::$app->redis->set('mykey', 'some value');
-         $key = Yii::$app->redis->get('mykey');
-         echo $key;die;
+        $users = User::find()->all();
+        Yii::$app->redis->set('mykey', 'some value');
 
         return $this->render('index', compact('users'));
     }

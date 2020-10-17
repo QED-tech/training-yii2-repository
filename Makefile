@@ -3,7 +3,7 @@ up:
 stop:
 	docker-compose stop
 install:
-	docker-compose run --rm backend composer update
+	docker-compose run --rm backend composer install
 
 migrate:
 	docker-compose run --rm backend yii migrate

@@ -6,6 +6,7 @@ namespace frontend\modules\user\controllers;
 
 use frontend\models\User;
 use Yii;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -25,6 +26,21 @@ class ProfileController extends Controller
             return new NotFoundHttpException('user not found');
         }
         return $user;
+    }
+
+    public function actionSubscribe ($id) {
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        $user = $this->findUser($id);
+        $currentUser = Yii::$app->user->identity;
+
+        /** @var User $user */
+        $currentUser->followUser($user);
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
 

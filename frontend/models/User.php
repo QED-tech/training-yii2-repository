@@ -25,6 +25,7 @@ use yii\web\IdentityInterface;
  * @property integer $type
  * @property string $nickname
  * @property string $picture
+ * @property-read string $authKey
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -223,5 +224,25 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         return $this->getId();
+    }
+
+    public function followUser(User $user) {
+
+        $redis = Yii::$app->redis;
+        $redis->sadd("user:{$this->getId()}:subscriptions", $user->getId());
+        $redis->sadd("user:{$user->getId()}:followers", $this->getId());
+
+    }
+
+    public function getSubscriptions()
+    {
+        $redis = Yii::$app->redis;
+        return $redis->smembers("user:{$this->getId()}:subscriptions");
+    }
+
+    public function getFollowers()
+    {
+        $redis = Yii::$app->redis;
+        return $redis->smembers("user:{$this->getId()}:followers");
     }
 }
