@@ -49,7 +49,8 @@ return [
             'showScriptName' => false,
             'rules' => [
                 'profile/<nickname:\w+>' => 'user/profile/view',
-                'subscribe/<id:\d+>' => 'user/profile/subscribe'
+                'subscribe/<id:\d+>' => 'user/profile/subscribe',
+                'site/index/<page:\d+>'   => 'site/index'
             ],
         ],
 

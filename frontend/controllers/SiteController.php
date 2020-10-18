@@ -2,8 +2,8 @@
 namespace frontend\controllers;
 
 use frontend\models\User;
-use Redis;
 use Yii;
+use yii\data\Pagination;
 use yii\web\Controller;
 
 /**
@@ -35,10 +35,14 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-        $users = User::find()->all();
-        Yii::$app->redis->set('mykey', 'some value');
+        $users = User::find();
+        $pages = new Pagination(['totalCount' => User::find()->count(), 'pageSize' => 10, 'forcePageParam' => false, 'pageSizeParam' => false]);
+        $users = $users->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
 
-        return $this->render('index', compact('users'));
+
+        return $this->render('index', compact('users', 'pages'));
     }
 
 

@@ -1,8 +1,10 @@
 <?php
-
+/** @var array $users */
 /* @var $this yii\web\View */
+/* @var $pages frontend\controllers\SiteController */
 
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
 
 $this->title = 'Instagram';
 ?>
@@ -14,10 +16,9 @@ $this->title = 'Instagram';
 
     <div class="body-content">
 
-
         <div class="row">
-            <div class="col-lg-4">
-                <?php /** @var array $users */
+            <div class="col-lg-8">
+                <?php
                 foreach ($users as $user): ?>
 
                     <p>
@@ -27,10 +28,17 @@ $this->title = 'Instagram';
                     </p>
                     <hr>
                 <?php endforeach; ?>
-            </div>
-            <div class="col-lg-4">
 
+                <?php
+
+                // display pagination
+                echo LinkPager::widget([
+                    'pagination' => $pages,
+                ]);
+
+                ?>
             </div>
+
             <div class="col-lg-4">
 
             </div>
