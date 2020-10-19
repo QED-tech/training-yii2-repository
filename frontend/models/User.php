@@ -26,6 +26,10 @@ use yii\web\IdentityInterface;
  * @property string $nickname
  * @property string $picture
  * @property-read string $authKey
+ * @property-read mixed $subscriptionList
+ * @property-read mixed $followersList
+ * @property-read mixed $followers
+ * @property-read mixed $subscriptions
  * @property string $password write-only password
  */
 class User extends ActiveRecord implements IdentityInterface
@@ -234,6 +238,13 @@ class User extends ActiveRecord implements IdentityInterface
 
     }
 
+    public function unfollowUser(User $user)
+    {
+        $redis = Yii::$app->redis;
+        $redis->srem("user:{$this->getId()}:subscriptions", $user->getId());
+        $redis->srem("user:{$user->getId()}:followers", $this->getId());
+    }
+
     public function getSubscriptions()
     {
         $redis = Yii::$app->redis;
@@ -244,5 +255,23 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $redis = Yii::$app->redis;
         return $redis->smembers("user:{$this->getId()}:followers");
+    }
+
+    public function getFollowersList()
+    {
+        $followers = $this->getFollowers();
+        $ids = array_values($followers);
+        return User::find()->where(['id' => $ids])->all();
+
+    }
+    public function getSubscriptionList() {
+        $subscription = $this->getSubscriptions();
+        $ids = array_values($subscription);
+        return User::find()->where(['id' => $ids])->all();
+    }
+
+    public function isOwnerPage(User $user)
+    {
+       return Yii::$app->user->getId() === $user->id;
     }
 }

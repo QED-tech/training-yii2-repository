@@ -31,7 +31,7 @@ $this->title = 'Instagram';
 
                 <?php
 
-                // display pagination
+                // pagination
                 echo LinkPager::widget([
                     'pagination' => $pages,
                 ]);

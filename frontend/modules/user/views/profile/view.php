@@ -1,5 +1,6 @@
 <?php
 /* @var $user frontend\models\User */
+
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -17,22 +18,33 @@ use yii\helpers\Url;
     </div>
 
     <div class="col-md-6">
-        <div class="user__subscribe-btn">
-            <a href="<?= Url::to(['profile/subscribe', 'id' => $user->id]) ?>">Subscribe</a>
-        </div>
 
-        <span>
+        <?php if (!$user->isOwnerPage($user)) : ?>
+            <div class="user__subscribe-btn">
+                <a href="<?= Url::to(['profile/subscribe', 'id' => $user->id]) ?>">Subscribe</a>
+            </div>
+
+            <div class="user__subscribe-btn">
+                <a href="<?= Url::to(['profile/unsubscribe', 'id' => $user->id]) ?>">Unsubscribe</a>
+            </div>
+        <?php endif; ?>
+
+
+        <a data-toggle="modal" data-target="#subscribe-modal">
             Подписок:
-            <?= count($user->getSubscriptions())?>
-        </span>
+            <?= count($user->getSubscriptions()) ?>
+        </a>
+
         <br>
-        <span>
+
+        <a data-toggle="modal" data-target="#followers-modal">
             Подписчиков:
-            <?= count($user->getFollowers())?>
-        </span>
+            <?= count($user->getFollowers()) ?>
+        </a>
     </div>
 </div>
 
 
 
-
+<?= $this->render('include/modal-subscribe.php', compact('user')) ?>
+<?= $this->render('include/modal-followers.php', compact('user')) ?>
