@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use frontend\models\User;
 use Yii;
 use yii\data\Pagination;
+use yii\filters\Cors;
 use yii\web\Controller;
 
 /**
@@ -11,7 +12,7 @@ use yii\web\Controller;
  */
 class SiteController extends Controller
 {
-
+    public $enableCsrfValidation = false;
 
     /**
      * {@inheritdoc}
@@ -23,6 +24,44 @@ class SiteController extends Controller
                 'class' => 'yii\web\ErrorAction',
             ]
         ];
+
+
+    }
+
+
+    /**
+     * List of allowed domains.
+     * Note: Restriction works only for AJAX (using CORS, is not secure).
+     *
+     * @return array List of domains, that can access to this API
+     */
+    public static function allowedDomains() {
+        return [
+            // '*',                        // star allows all domains
+            'http://127.0.0.1:20080',
+            'http://127.0.0.1',
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors() {
+        return array_merge(parent::behaviors(), [
+
+            // For cross-domain AJAX request
+            'corsFilter'  => [
+                'class' => Cors::class,
+                'cors'  => [
+                    // restrict access to domains:
+                    'Origin'                           => static::allowedDomains(),
+                    'Access-Control-Request-Method'    => ['POST'],
+                    'Access-Control-Allow-Credentials' => true,
+                    'Access-Control-Max-Age'           => 3600,                 // Cache (seconds)
+                ],
+            ],
+
+        ]);
     }
 
 
@@ -41,6 +80,8 @@ class SiteController extends Controller
             ->limit($pages->limit)
             ->all();
 
+        $redis = Yii::$app->redis;
+        $redis->publish('chat', 'hello');
 
         return $this->render('index', compact('users', 'pages'));
     }

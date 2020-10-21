@@ -2,8 +2,6 @@ up:
 	docker-compose up -d
 stop:
 	docker-compose stop
-install:
-	docker-compose run --rm backend composer install
 
 migrate:
 	docker-compose run --rm backend yii migrate
@@ -13,3 +11,6 @@ install:
 	docker-compose run --rm backend composer install
 init:
 	docker-compose run --rm backend php /app/init
+
+server:
+	docker-compose run --rm frontend npm start
