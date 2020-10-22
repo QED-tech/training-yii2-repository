@@ -274,4 +274,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
        return Yii::$app->user->getId() === $user->id;
     }
+
+    public function getPicture()
+    {
+        if ($this->picture) {
+            return Yii::$app->storage->getFile($this->picture);
+        }
+    }
 }

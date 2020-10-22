@@ -53,7 +53,9 @@ return [
                 'site/index/<page:\d+>'   => 'site/index'
             ],
         ],
-
+        'storage' => [
+          'class' => 'frontend\components\Storage'
+        ],
     ],
     'params' => $params,
 ];

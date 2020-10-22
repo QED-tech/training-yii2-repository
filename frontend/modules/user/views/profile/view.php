@@ -1,20 +1,56 @@
 <?php
 /* @var $user frontend\models\User */
+/* @var $modelPicture frontend\modules\user\models\forms\PictureForm */
 
+
+use dosamigos\fileupload\FileUpload;
 use yii\helpers\Html;
 use yii\helpers\Url;
-
 ?>
 
 <div class="row">
     <div class="col-md-6">
-        <h3 class="m-0 user__username">
-            <?= Html::encode($user->username) ?>
-        </h3>
+       <div class="row">
+          <div class="col-md-4">
 
-        <p class="user__about">
-            <?= $user->about ?>
-        </p>
+              <img width="100" src="<?= $user->getPicture() ?>">
+              <?= FileUpload::widget([
+                  'model' => $modelPicture,
+                  'attribute' => 'picture',
+                  'url' => ['/user/profile/picture-upload'], // your url, this is just for demo purposes,
+                  'options' => ['accept' => 'image/*'],
+                  'clientOptions' => [
+                      'maxFileSize' => 2000000
+                  ],
+                  // Also, you can specify jQuery-File-Upload events
+                  // see: https://github.com/blueimp/jQuery-File-Upload/wiki/Options#processing-callback-options
+                  'clientEvents' => [
+                      'fileuploaddone' => 'function(e, data) {
+                                console.log(e);
+                                console.log(data);
+                            }',
+                      'fileuploadfail' => 'function(e, data) {
+                                console.log(e);
+                                console.log(data);
+                            }',
+                  ],
+              ]); ?>
+
+          </div>
+
+           <div class="col-md-4">
+               <h3 class="m-0 user__username">
+                   <?= Html::encode($user->username) ?>
+               </h3>
+               <p class="user__about">
+                   <?= $user->about ?>
+               </p>
+           </div>
+       </div>
+
+
+
+
     </div>
 
     <div class="col-md-6">
