@@ -101,6 +101,12 @@ a.desc:after {
     border: none;
 }
 
+.m-0-auto {
+    display: block;
+    margin: 0 auto;
+}
+
+
 @media(max-width:767px) {
     .nav li > form > button.logout {
         display:block;

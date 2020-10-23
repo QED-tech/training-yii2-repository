@@ -75,6 +75,8 @@ class ProfileController extends Controller
 
     public function actionPictureUpload()
     {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
         $model = new PictureForm();
         $model->picture = UploadedFile::getInstance($model, 'picture');
 
@@ -82,12 +84,20 @@ class ProfileController extends Controller
 
             $user = Yii::$app->user->identity;
             $user->picture = Yii::$app->storage->saveUploadedFiles($model->picture);
-            $user->save(false, ['picture']);
+
+            if ($user->save(false, ['picture'])) {
+                return [
+                    'success' => true,
+                    'pictureUri' => Yii::$app->storage->getFile($user->picture)
+                ];
+            }
         }
 
+        return [
+            'success' => false,
+            'errors' => $model->getErrors()
+        ];
     }
-
-
 
 
 }

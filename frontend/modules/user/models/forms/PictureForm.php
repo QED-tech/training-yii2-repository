@@ -15,7 +15,7 @@ class PictureForm extends Model
     public function rules()
     {
         return [
-            ['picture', 'file', 'extensions' => ['jpg'], 'checkExtensionByMimeType' => true]
+            ['picture', 'file', 'extensions' => ['jpg', 'png'], 'checkExtensionByMimeType' => true]
         ];
     }
 
