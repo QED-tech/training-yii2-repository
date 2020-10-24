@@ -19,6 +19,7 @@ class Yii extends \yii\BaseYii
  * @property yii\db\Connection $db
  * @property yii\swiftmailer\Mailer $mailer
  * @property frontend\components\Storage $storage
+ * @property frontend\components\FeedService $feedService
  * @property yii\authclient\Collection $authClientCollection
  * @property backend\components\TelegramBot $Telegram
  */

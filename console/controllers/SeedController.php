@@ -17,7 +17,7 @@ class SeedController extends Controller
             $user = new User([
                 'username' => $faker->firstName,
                 'auth_key' => Yii::$app->security->generateRandomString(),
-                'password_hash' => $faker->password(6, 15),
+                'password_hash' => Yii::$app->security->generatePasswordHash(123456),
                 'about' => $faker->realText(70),
                 'nickname' => $faker->userName,
                 'email' => $faker->email,

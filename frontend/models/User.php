@@ -232,7 +232,8 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->getId();
     }
 
-    public function followUser(User $user) {
+    public function followUser(User $user)
+    {
 
         $redis = Yii::$app->redis;
         $redis->sadd("user:{$this->getId()}:subscriptions", $user->getId());
@@ -266,7 +267,9 @@ class User extends ActiveRecord implements IdentityInterface
         return User::find()->where(['id' => $ids])->all();
 
     }
-    public function getSubscriptionList() {
+
+    public function getSubscriptionList()
+    {
         $subscription = $this->getSubscriptions();
         $ids = array_values($subscription);
         return User::find()->where(['id' => $ids])->all();
@@ -274,7 +277,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function isOwnerPage(User $user)
     {
-       return Yii::$app->user->getId() === $user->id;
+        return Yii::$app->user->getId() === $user->id;
     }
 
     public function getPicture()
@@ -284,5 +287,10 @@ class User extends ActiveRecord implements IdentityInterface
         }
 
         return self::DEFAULT_PICTURE;
+    }
+
+    public function getFeed(int $limit)
+    {
+        return $this->hasMany(Feed::class, ['user_id' => 'id'])->orderBy(['post_created_at' => SORT_DESC])->limit($limit)->all();
     }
 }

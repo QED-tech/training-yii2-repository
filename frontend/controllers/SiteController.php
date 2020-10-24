@@ -1,10 +1,11 @@
 <?php
+
 namespace frontend\controllers;
 
 use frontend\models\User;
 use Yii;
-use yii\data\Pagination;
-use yii\filters\Cors;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 
 /**
@@ -12,6 +13,7 @@ use yii\web\Controller;
  */
 class SiteController extends Controller
 {
+
 
     /**
      * {@inheritdoc}
@@ -28,7 +30,6 @@ class SiteController extends Controller
     }
 
 
-
     /**
      * Displays homepage.
      *
@@ -36,18 +37,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        if(Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
 
-        $users = User::find();
-        $pages = new Pagination(['totalCount' => User::find()->count(), 'pageSize' => 10, 'forcePageParam' => false, 'pageSizeParam' => false]);
-        $users = $users->offset($pages->offset)
-            ->limit($pages->limit)
-            ->orderBy(['id' => SORT_DESC])
-            ->all();
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+        $limit = Yii::$app->params['feedPostLimit'];
+        $feedItems = $currentUser->getFeed($limit);
 
-        $redis = Yii::$app->redis;
-        $redis->publish('chat', 'hello');
-
-        return $this->render('index', compact('users', 'pages'));
+        return $this->render('index', compact('feedItems', 'currentUser'));
     }
 
 

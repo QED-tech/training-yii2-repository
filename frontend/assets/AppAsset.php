@@ -15,6 +15,7 @@ class AppAsset extends AssetBundle
         'css/site.css',
         'css/profile/style.css',
         'css/post/style.css',
+        'css/feed/style.css',
     ];
     public $js = [];
     public $depends = [

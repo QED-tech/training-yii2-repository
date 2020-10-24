@@ -2,45 +2,50 @@
 /** @var array $users */
 /* @var $this yii\web\View */
 /* @var $pages frontend\controllers\SiteController */
+/* @var $feedItems Feed */
 
+/* @var $currentUser User */
+
+use frontend\models\Feed;
+use frontend\models\User;
+use \yii\helpers\HtmlPurifier;
 use yii\helpers\Url;
-use yii\widgets\LinkPager;
 
 $this->title = 'Instagram';
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
-        <h1>Instagram</h1>
+        <h1>Feed</h1>
     </div>
 
     <div class="body-content">
 
         <div class="row">
-            <div class="col-lg-8">
-                <?php
-                foreach ($users as $user): ?>
+            <div class="col-md-6">
+                <?php /** @var Feed $item */
+                foreach ($feedItems as $item) : ?>
+                    <article class="feed-article">
+                        <div class="article-author">
+                            <img width="40" height="40" class="profile__img--small" src="<?= $item->author_picture ?>" alt="">
+                            <a href="<?= Url::to(['/user/profile/view', 'nickname' => $item->author_id]) ?>">
+                                <?= $item->author_name ?>
+                            </a>
+                        </div>
 
-                    <p>
-                        <a href="<?= Url::to(['/user/profile/view', 'nickname' =>  $user->getNickname()]) ?>">
-                            <?= $user->username ?>
-                        </a>
-                    </p>
-                    <hr>
+                        <div class="article-image">
+                            <img class="img-responsive" src="<?= Yii::$app->storage->getFile($item->post_filename) ?>" alt="">
+                        </div>
+
+                        <div class="article-description">
+                            <p>
+                             <?= HtmlPurifier::process($item->post_description) ?>
+                            </p>
+                        </div>
+
+                        <hr>
+                    </article>
                 <?php endforeach; ?>
-
-                <?php
-
-                // pagination
-                echo LinkPager::widget([
-                    'pagination' => $pages,
-                ]);
-
-                ?>
-            </div>
-
-            <div class="col-lg-4">
-
             </div>
         </div>
 

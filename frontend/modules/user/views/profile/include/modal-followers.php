@@ -10,9 +10,11 @@
                 <?php use yii\helpers\Url;
 
                 foreach ($user->getFollowersList() as $follower) : ?>
-                    <a href="<?= Url::to(['/user/profile/view', 'nickname' => $follower->getNickname()]) ?>">
-                        <?= $follower->username ?>
-                    </a>
+                    <div>
+                        <a href="<?= Url::to(['/user/profile/view', 'nickname' => $follower->getNickname()]) ?>">
+                            <?= $follower->username ?>
+                        </a>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>
