@@ -1,4 +1,4 @@
-const likeCounter = document.getElementById('like-counter')
+
 
 document.addEventListener('click', async function (event) {
 
@@ -6,7 +6,10 @@ document.addEventListener('click', async function (event) {
     if(!buttonLike) return;
 
     let formData = new FormData
-    formData.append('id', buttonLike.dataset['id'])
+    let postId = buttonLike.dataset['id']
+    formData.append('id', postId)
+
+    const likeCounter = document.getElementById(`like-counter-${postId}`)
 
     let res = await fetch('/post/default/like', {
         method: 'POST',
@@ -14,8 +17,13 @@ document.addEventListener('click', async function (event) {
     })
 
     let response = await res.json()
-    response.success === true ? likeCounter.innerText = response.likeCount : false
-    response.success === true ? document.location.reload() : false
+
+
+    if(response.success) {
+        likeCounter.innerText = response.likeCount
+        buttonLike.previousElementSibling.classList.remove('hidden')
+        buttonLike.classList.add('hidden')
+    }
 
 })
 
@@ -25,7 +33,10 @@ document.addEventListener('click', async function (event) {
     if(!buttonDislike) return;
 
     let formData = new FormData
-    formData.append('id', buttonDislike.dataset['id'])
+    let postId = buttonDislike.dataset['id']
+    formData.append('id', postId)
+
+    const likeCounter = document.getElementById(`like-counter-${postId}`)
 
     let res = await fetch('/post/default/unlike', {
         method: 'POST',
@@ -33,8 +44,14 @@ document.addEventListener('click', async function (event) {
     })
 
     let response = await res.json()
-    response.success === true ? likeCounter.innerText = response.likeCount : false
-    response.success === true ? document.location.reload() : false
+
+    if(response.success) {
+        likeCounter.innerText = response.likeCount
+        buttonDislike.nextElementSibling.classList.remove('hidden')
+        buttonDislike.classList.add('hidden')
+    }
+
+
 
 
 

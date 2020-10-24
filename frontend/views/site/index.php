@@ -22,7 +22,7 @@ $this->title = 'Instagram';
     <div class="body-content">
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <?php /** @var Feed $item */
                 foreach ($feedItems as $item) : ?>
                     <article class="feed-article">
@@ -43,7 +43,24 @@ $this->title = 'Instagram';
                             </p>
                         </div>
 
+                        <div class="article-created_at">
+                            <?= Yii::$app->formatter->asDate($item->post_created_at) ?>
+                        </div>
+                        <div class="likes-count-wrapper">
+                            Likes: <span id="like-counter-<?= $item->post_id ?>"><?= $item->countLikes() ?></span>
+                        </div>
+
+                        <div class="buttons-group">
+                            <a class="badge  <?= $item->isLikeBy($currentUser) ? 'bg-is-liked' : 'hidden' ?>"  id="button-unlike" data-id="<?= $item->post_id ?>">
+                                Like
+                            </a>
+
+                            <a class="badge  <?= $item->isLikeBy($currentUser) ? 'hidden' : '' ?>" id="button-like" data-id="<?= $item->post_id ?>">
+                                Like
+                            </a>
+                        </div>
                         <hr>
+
                     </article>
                 <?php endforeach; ?>
             </div>
@@ -52,6 +69,8 @@ $this->title = 'Instagram';
     </div>
 </div>
 
+<?php
+$this->registerJsFile('@web/js/post-like.js');
 
 
 

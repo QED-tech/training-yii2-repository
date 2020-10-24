@@ -1,3 +1,7 @@
 .feed-article div {
     margin: 20px 0;
 }
+
+.bg-is-liked {
+    background-color: #1d60b3;
+}
