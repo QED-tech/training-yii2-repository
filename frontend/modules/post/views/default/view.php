@@ -10,35 +10,34 @@ use yii\helpers\Html;
 ?>
 
 
-    <div class="post-default-intro">
+    <div class="post-default-intro col-md-8">
 
-        <span>
-           Author:  <?= $post->user->username ?>
-        </span>
+        <div>
+            Author: <?= $post->user->username ?>
+        </div>
 
-        <img width="300" src="<?= $post->getImage() ?>" alt="">
+        <img class="img-responsive" " src="<?= $post->getImage() ?>" alt="">
 
-        <?= Html::encode($post->description) ?>
+        <div>
+            <?= Html::encode($post->description) ?>
+        </div>
 
         <div class="likes-count-wrapper">
             Likes: <span id="like-counter-<?= $post->id ?>"><?= $post->countLikes() ?></span>
         </div>
 
         <div class="buttons-group">
-
-
-            <a class="badge  <?= $post->isLikeBy($currentUser) ? 'bg-is-liked' : 'hidden' ?>"  id="button-unlike" data-id="<?= $post->id ?>">
+            <a class="badge  <?= $post->isLikeBy($currentUser) ? 'bg-is-liked' : 'hidden' ?>" id="button-unlike"
+               data-id="<?= $post->id ?>">
                 Like
             </a>
-
-            <a class="badge  <?= $post->isLikeBy($currentUser) ? 'hidden' : '' ?>" id="button-like" data-id="<?= $post->id ?>">
+            <a class="badge  <?= $post->isLikeBy($currentUser) ? 'hidden' : '' ?>" id="button-like"
+               data-id="<?= $post->id ?>">
                 Like
             </a>
-
-
         </div>
 
-        <hr>
+
     </div>
 
 

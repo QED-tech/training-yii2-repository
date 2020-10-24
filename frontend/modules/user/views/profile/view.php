@@ -4,8 +4,10 @@
 /* @var $modelPicture frontend\modules\user\models\forms\PictureForm */
 
 /* @var $this View */
+/* @var $posts Post */
 
 use dosamigos\fileupload\FileUpload;
+use frontend\models\Post;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\View;
@@ -16,7 +18,7 @@ use yii\web\View;
     <div class="msg-block" id="msg-block"></div>
 
     <div class="col-md-4">
-        <img width="200" id="profile-img" class="m-0-auto profile__img" src="<?= $user->getPicture() ?>">
+        <img id="profile-img" class="m-0-auto profile__img" src="<?= $user->getPicture() ?>">
     </div>
 
     <div class="col-md-8">
@@ -52,6 +54,22 @@ use yii\web\View;
 
     </div>
 
+
+</div>
+<hr>
+<div class="row">
+    <?php foreach ($posts as $post) : ?>
+       <article class="feed-article">
+           <a class="article-link" href="<?= Url::to(['/post/default/view', 'id' => $post->id]) ?>">
+               <div class="col-md-4">
+                   <img class="img-responsive" src="<?= Yii::$app->storage->getFile($post->filename) ?>" alt="">
+                   <div>
+                       <?= $post->description ?>
+                   </div>
+               </div>
+           </a>
+       </article>
+    <?php endforeach; ?>
 </div>
 
 
@@ -65,7 +83,7 @@ use yii\web\View;
 
     async function subscribeOrUnsubscribeBtn() {
 
-        if(btnBox === null) {
+        if (btnBox === null) {
             return false;
         }
 

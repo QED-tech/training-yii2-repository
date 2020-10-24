@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "post".
@@ -11,9 +12,12 @@ use Yii;
  * @property int $user_id
  * @property string $filename
  * @property string|null $description
+ * @property-read void $postsByUser
+ * @property-read mixed $user
+ * @property-read mixed $image
  * @property int $created_at
  */
-class Post extends \yii\db\ActiveRecord
+class Post extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -79,5 +83,6 @@ class Post extends \yii\db\ActiveRecord
         $redis = Yii::$app->redis;
         return $redis->sismember("post:{$this->getId()}:likes", $user->getId());
     }
+
 
 }

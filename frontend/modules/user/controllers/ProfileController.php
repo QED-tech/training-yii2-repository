@@ -4,6 +4,7 @@
 namespace frontend\modules\user\controllers;
 
 
+use frontend\models\Post;
 use frontend\models\User;
 use frontend\modules\user\behaviors\AccessControl;
 use frontend\modules\user\models\forms\PictureForm;
@@ -30,8 +31,9 @@ class ProfileController extends Controller
     {
         $user = $this->findUser($nickname);
         $modelPicture = new PictureForm();
+        $posts = $user->getPosts();
 
-        return $this->render('view', compact('user', 'modelPicture'));
+        return $this->render('view', compact('user', 'modelPicture', 'posts'));
     }
 
     public function findUser($nickname)

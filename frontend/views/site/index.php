@@ -27,21 +27,23 @@ $this->title = 'Instagram';
                 foreach ($feedItems as $item) : ?>
                     <article class="feed-article">
                         <div class="article-author">
-                            <img width="40" height="40" class="profile__img--small" src="<?= $item->author_picture ?>" alt="">
+                            <img class="profile__img--small" src="<?= $item->author_picture ?>" alt="">
                             <a href="<?= Url::to(['/user/profile/view', 'nickname' => $item->author_id]) ?>">
                                 <?= $item->author_name ?>
                             </a>
                         </div>
 
-                        <div class="article-image">
-                            <img class="img-responsive" src="<?= Yii::$app->storage->getFile($item->post_filename) ?>" alt="">
-                        </div>
+                        <a class="article-link" href="<?= Url::to(['/post/default/view', 'id' => $item->post_id]) ?>">
+                            <div class="article-image">
+                                <img class="img-responsive" src="<?= Yii::$app->storage->getFile($item->post_filename) ?>" alt="">
+                            </div>
 
-                        <div class="article-description">
-                            <p>
-                             <?= HtmlPurifier::process($item->post_description) ?>
-                            </p>
-                        </div>
+                            <div class="article-description">
+                                <p>
+                                    <?= HtmlPurifier::process($item->post_description) ?>
+                                </p>
+                            </div>
+                        </a>
 
                         <div class="article-created_at">
                             <?= Yii::$app->formatter->asDate($item->post_created_at) ?>

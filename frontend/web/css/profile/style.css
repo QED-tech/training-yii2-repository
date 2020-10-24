@@ -1,13 +1,13 @@
 .profile__img {
     border-radius: 100%;
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
 }
 
 .profile__img--small {
     border-radius: 100%;
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
 }
 
 .box-shadow-btn {

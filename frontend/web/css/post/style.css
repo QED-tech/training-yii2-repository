@@ -3,3 +3,7 @@
     flex-direction: column;
     flex-wrap: wrap;
 }
+
+.post-default-intro div {
+    margin: 20px 0;
+}
