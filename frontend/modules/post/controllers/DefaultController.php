@@ -15,6 +15,8 @@ use yii\web\UploadedFile;
  */
 class DefaultController extends Controller
 {
+    public $enableCsrfValidation = false;
+
     /**
      * @return string|Response
      */
@@ -43,7 +45,8 @@ class DefaultController extends Controller
     public function actionView($id)
     {
         return $this->render('view', [
-            'post' => $this->findPost($id)
+            'post' => $this->findPost($id),
+            'currentUser' => Yii::$app->user->identity
         ]);
     }
 
@@ -59,5 +62,51 @@ class DefaultController extends Controller
         }
 
         throw new NotFoundHttpException();
+    }
+
+    public function actionLike()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if(Yii::$app->user->isGuest) {
+            return [
+                'success' => false,
+                'redirect' => 'login'
+            ];
+        }
+
+        $currentUser = Yii::$app->user->identity;
+        $id = Yii::$app->request->post('id');
+        $post = Post::findOne($id);
+
+        $post->like($currentUser);
+
+        return [
+          'success' => true,
+            'likeCount' => $post->countLikes()
+        ];
+    }
+
+    public function actionUnlike()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if(Yii::$app->user->isGuest) {
+            return [
+                'success' => false,
+                'redirect' => 'login'
+            ];
+        }
+
+        $currentUser = Yii::$app->user->identity;
+        $id = Yii::$app->request->post('id');
+        $post = Post::findOne($id);
+
+        $post->unlike($currentUser);
+
+        return [
+            'success' => true,
+            'likeCount' => $post->countLikes()
+        ];
     }
 }
