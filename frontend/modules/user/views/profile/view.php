@@ -33,12 +33,12 @@ use yii\helpers\Url;
         </p>
 
         <div class="d-flex">
-            <a data-toggle="modal" data-target="#subscribe-modal">
+            <a data-toggle="modal" class="btn" data-target="#subscribe-modal">
                 Подписок:
                 <?= count($user->getSubscriptions()) ?>
             </a>
 
-            <a data-toggle="modal" data-target="#followers-modal">
+            <a data-toggle="modal" class="btn" data-target="#followers-modal">
                 Подписчиков:
                 <?= count($user->getFollowers()) ?>
             </a>
@@ -46,12 +46,9 @@ use yii\helpers\Url;
 
 
         <?php if (!$user->isOwnerPage($user)) : ?>
-            <div class="user__subscribe-btn">
-                <a href="<?= Url::to(['profile/subscribe', 'id' => $user->id]) ?>">Subscribe</a>
-            </div>
-
-            <div class="user__subscribe-btn">
-                <a href="<?= Url::to(['profile/unsubscribe', 'id' => $user->id]) ?>">Unsubscribe</a>
+            <div class="btn-group">
+                <a class="btn" href="<?= Url::to(['profile/subscribe', 'id' => $user->id]) ?>">Subscribe</a>
+                <a class="btn" href="<?= Url::to(['profile/unsubscribe', 'id' => $user->id]) ?>">Unsubscribe</a>
             </div>
         <?php endif; ?>
 
