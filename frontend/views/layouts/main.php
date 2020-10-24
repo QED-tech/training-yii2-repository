@@ -43,6 +43,9 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/user/default/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/user/default/login']];
     } else {
+        $user = Yii::$app->user->identity->nickname;
+        $menuItems[] = ['label' => 'Профиль', 'url' => ["/profile/{$user}"]];
+        $menuItems[] = ['label' => 'Создать Пост', 'url' => ['/post/default/create']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/user/default/logout'], 'post')
             . Html::submitButton(
@@ -51,6 +54,7 @@ AppAsset::register($this);
             )
             . Html::endForm()
             . '</li>';
+
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],

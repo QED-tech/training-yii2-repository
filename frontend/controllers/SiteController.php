@@ -12,7 +12,6 @@ use yii\web\Controller;
  */
 class SiteController extends Controller
 {
-    public $enableCsrfValidation = false;
 
     /**
      * {@inheritdoc}
@@ -29,42 +28,6 @@ class SiteController extends Controller
     }
 
 
-    /**
-     * List of allowed domains.
-     * Note: Restriction works only for AJAX (using CORS, is not secure).
-     *
-     * @return array List of domains, that can access to this API
-     */
-    public static function allowedDomains() {
-        return [
-            // '*',                        // star allows all domains
-            'http://127.0.0.1:20080',
-            'http://127.0.0.1',
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function behaviors() {
-        return array_merge(parent::behaviors(), [
-
-            // For cross-domain AJAX request
-            'corsFilter'  => [
-                'class' => Cors::class,
-                'cors'  => [
-                    // restrict access to domains:
-                    'Origin'                           => static::allowedDomains(),
-                    'Access-Control-Request-Method'    => ['POST'],
-                    'Access-Control-Allow-Credentials' => true,
-                    'Access-Control-Max-Age'           => 3600,                 // Cache (seconds)
-                ],
-            ],
-
-        ]);
-    }
-
-
 
     /**
      * Displays homepage.
@@ -78,6 +41,7 @@ class SiteController extends Controller
         $pages = new Pagination(['totalCount' => User::find()->count(), 'pageSize' => 10, 'forcePageParam' => false, 'pageSizeParam' => false]);
         $users = $users->offset($pages->offset)
             ->limit($pages->limit)
+            ->orderBy(['id' => SORT_DESC])
             ->all();
 
         $redis = Yii::$app->redis;

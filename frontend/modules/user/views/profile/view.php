@@ -19,7 +19,10 @@ use yii\helpers\Url;
 
     <div class="col-md-8">
 
-        <?= $this->render('include/file-upload.php', compact('modelPicture')) ?>
+        <?php if ($user->isOwnerPage($user)) : ?>
+            <?= $this->render('include/file-upload.php', compact('modelPicture')) ?>
+        <?php endif; ?>
+
 
 
         <h3 class="m-0 user__username">

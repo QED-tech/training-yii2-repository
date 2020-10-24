@@ -13,12 +13,12 @@ class SeedController extends Controller
     {
         $faker = Factory::create();
 
-        for($i = 0; $i <= 100; $i++) {
+        for($i = 0; $i <= 12; $i++) {
             $user = new User([
-                'username' => $faker->userName,
+                'username' => $faker->firstName,
                 'auth_key' => Yii::$app->security->generateRandomString(),
                 'password_hash' => $faker->password(6, 15),
-                'about' => $faker->realText(40),
+                'about' => $faker->realText(70),
                 'nickname' => $faker->userName,
                 'email' => $faker->email,
                 'status' => 10,
