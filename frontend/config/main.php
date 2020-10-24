@@ -53,7 +53,8 @@ return [
             'rules' => [
                 'profile/<nickname:\w+>' => 'user/profile/view',
                 'subscribe/<id:\d+>' => 'user/profile/subscribe',
-                'site/index/<page:\d+>'   => 'site/index'
+                'site/index/<page:\d+>'   => 'site/index',
+                'post/<id:\d+>' => 'post/default/view'
             ],
         ],
         'storage' => [

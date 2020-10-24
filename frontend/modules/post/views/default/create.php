@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 /* @var $model frontend\modules\post\models\forms\PostForm */
 ?>
 
-<div class="created-post__wrapper">
+<div class="post-default-intro">
     <h1>Created post!</h1>
 
     <?php $form = ActiveForm::begin(); ?>
