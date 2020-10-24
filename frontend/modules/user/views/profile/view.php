@@ -3,14 +3,16 @@
 
 /* @var $modelPicture frontend\modules\user\models\forms\PictureForm */
 
+/* @var $this View */
 
 use dosamigos\fileupload\FileUpload;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
 
 ?>
 
-<div class="row">
+<div class="row" data-user-id="<?= $user->getId() ?>" id="user-id">
     <div class="msg-block" id="msg-block"></div>
 
     <div class="col-md-4">
@@ -22,7 +24,6 @@ use yii\helpers\Url;
         <?php if ($user->isOwnerPage($user)) : ?>
             <?= $this->render('include/file-upload.php', compact('modelPicture')) ?>
         <?php endif; ?>
-
 
 
         <h3 class="m-0 user__username">
@@ -44,12 +45,9 @@ use yii\helpers\Url;
             </a>
         </div>
 
-
         <?php if (!$user->isOwnerPage($user)) : ?>
-            <div class="btn-group">
-                <a class="btn" href="<?= Url::to(['profile/subscribe', 'id' => $user->id]) ?>">Subscribe</a>
-                <a class="btn" href="<?= Url::to(['profile/unsubscribe', 'id' => $user->id]) ?>">Unsubscribe</a>
-            </div>
+            <hr>
+            <div class="btn-group" id="subscribe-or-unsubscribe-btn"></div>
         <?php endif; ?>
 
     </div>
@@ -59,3 +57,35 @@ use yii\helpers\Url;
 
 <?= $this->render('include/modal-subscribe.php', compact('user')) ?>
 <?= $this->render('include/modal-followers.php', compact('user')) ?>
+
+
+<script>
+    const btnBox = document.getElementById('subscribe-or-unsubscribe-btn')
+    const userId = document.getElementById('user-id')
+
+    async function subscribeOrUnsubscribeBtn() {
+
+        if(btnBox === null) {
+            return false;
+        }
+
+        let formData = new FormData
+        formData.append('id', userId.dataset.userId)
+
+        let res = await fetch('/user/profile/get-subscribe-or-unsubscribe', {
+            method: 'POST',
+            body: formData
+        })
+
+        let response = await res.json()
+
+        response.isSubscribe === "1"
+            ?
+            btnBox.innerHTML = `<a class="btn box-shadow-btn" href="<?= Url::to(['profile/unsubscribe', 'id' => $user->id]) ?>">Unsubscribe</a>`
+            :
+            btnBox.innerHTML = `<a class="btn box-shadow-btn" href="<?= Url::to(['profile/subscribe', 'id' => $user->id]) ?>">Subscribe</a>`
+
+    }
+
+    subscribeOrUnsubscribeBtn()
+</script>

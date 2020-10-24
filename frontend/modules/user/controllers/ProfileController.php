@@ -17,6 +17,8 @@ use yii\web\UploadedFile;
 class ProfileController extends Controller
 {
 
+    public $enableCsrfValidation = false;
+
     public function behaviors()
     {
         return [
@@ -96,6 +98,22 @@ class ProfileController extends Controller
         return [
             'success' => false,
             'errors' => $model->getErrors()
+        ];
+    }
+
+    public function actionGetSubscribeOrUnsubscribe()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $currentUser = Yii::$app->user->identity;
+
+        $id = Yii::$app->request->post('id');
+        $user = User::findOne($id);
+
+        $isSubscribe = $user->isSubscribe($user, $currentUser);
+
+        return [
+          'response' => 'ok',
+            'isSubscribe' => $isSubscribe
         ];
     }
 

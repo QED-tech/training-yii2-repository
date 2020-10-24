@@ -293,4 +293,11 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Feed::class, ['user_id' => 'id'])->orderBy(['post_created_at' => SORT_DESC])->limit($limit)->all();
     }
+
+    public function isSubscribe(User $user, User $currentUser)
+    {
+        $redis = Yii::$app->redis;
+        return $redis->sismember("user:{$user->getId()}:followers", $currentUser->getId());
+    }
+
 }
