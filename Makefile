@@ -12,8 +12,6 @@ install:
 init:
 	docker-compose run --rm backend php /app/init
 
-server:
-	docker-compose run --rm frontend npm start
-
 ide:
 	php yii ide-helper/generate
+
