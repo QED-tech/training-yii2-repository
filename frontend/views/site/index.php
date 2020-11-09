@@ -53,12 +53,17 @@ $this->title = 'Instagram';
                         </div>
 
                         <div class="buttons-group">
-                            <a class="badge  <?= $item->isLikeBy($currentUser) ? 'bg-is-liked' : 'hidden' ?>"  id="button-unlike" data-id="<?= $item->post_id ?>">
-                                Like
+                            <a class="liked-btn <?= $item->isLikeBy($currentUser) ? '' : 'hidden' ?>"  id="button-unlike" data-id="<?= $item->post_id ?>">
+                                <i class="fas fa-heart"></i>
                             </a>
 
-                            <a class="badge  <?= $item->isLikeBy($currentUser) ? 'hidden' : '' ?>" id="button-like" data-id="<?= $item->post_id ?>">
-                                Like
+                            <a class="liked-btn <?= $item->isLikeBy($currentUser) ? 'hidden' : '' ?>" id="button-like" data-id="<?= $item->post_id ?>">
+                                <i class="far fa-heart"></i>
+                            </a>
+
+
+                            <a >
+                                report post
                             </a>
                         </div>
                         <hr>

@@ -27,13 +27,13 @@ use yii\helpers\Html;
         </div>
 
         <div class="buttons-group">
-            <a class="badge  <?= $post->isLikeBy($currentUser) ? 'bg-is-liked' : 'hidden' ?>" id="button-unlike"
-               data-id="<?= $post->id ?>">
-                Like
+
+            <a class="liked-btn <?= $post->isLikeBy($currentUser) ? '' : 'hidden' ?>"  id="button-unlike" data-id="<?= $post->id ?>">
+                <i class="fas fa-heart"></i>
             </a>
-            <a class="badge  <?= $post->isLikeBy($currentUser) ? 'hidden' : '' ?>" id="button-like"
-               data-id="<?= $post->id ?>">
-                Like
+
+            <a class="liked-btn <?= $post->isLikeBy($currentUser) ? 'hidden' : '' ?>" id="button-like" data-id="<?= $post->id ?>">
+                <i class="far fa-heart"></i>
             </a>
         </div>
 

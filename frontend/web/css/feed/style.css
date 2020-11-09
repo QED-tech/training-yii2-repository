@@ -10,3 +10,14 @@
     text-decoration: none !important;
     color: rgba(0, 0, 0, 0.9)
 }
+
+.liked-btn {
+    font-size: 20px;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+
+.liked-btn:hover {
+    text-decoration: none;
+}
