@@ -59,4 +59,10 @@ class Feed extends \yii\db\ActiveRecord
         $redis = Yii::$app->redis;
         return (bool) $redis->sismember("post:{$this->post_id}:likes", $user->getId());
     }
+
+    public function isReported(User $user)
+    {
+        $redis = Yii::$app->redis;
+        return $redis->sismember("post:{$this->post_id}:complaints", $user->getId());
+    }
 }

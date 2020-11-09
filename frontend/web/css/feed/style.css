@@ -1,9 +1,9 @@
-.feed-article div {
-    margin: 20px 0;
-}
-
 .bg-is-liked {
     background-color: #1d60b3;
+}
+
+.article-description, .article-author {
+    margin: 20px 0;
 }
 
 .article-link {
@@ -20,4 +20,14 @@
 
 .liked-btn:hover {
     text-decoration: none;
+}
+
+.buttons-group {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.article-created_at {
+    margin-left: auto;
 }

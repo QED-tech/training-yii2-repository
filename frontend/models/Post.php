@@ -16,6 +16,7 @@ use yii\db\ActiveRecord;
  * @property-read mixed $user
  * @property-read mixed $image
  * @property int $created_at
+ * @property integer complaints
  */
 class Post extends ActiveRecord
 {
@@ -26,7 +27,6 @@ class Post extends ActiveRecord
     {
         return 'post';
     }
-
 
 
     /**
@@ -82,6 +82,19 @@ class Post extends ActiveRecord
     {
         $redis = Yii::$app->redis;
         return $redis->sismember("post:{$this->getId()}:likes", $user->getId());
+    }
+
+    public function complaint(User $user)
+    {
+        $redis = Yii::$app->redis;
+        $key = "post:{$this->getId()}:complaints";
+
+        if (!$redis->sismember($key, $user->getId())) {
+            $redis->sadd($key, $user->getId());
+            $this->complaints++;
+            return $this->save(false, ['complaints']);
+        }
+
     }
 
 

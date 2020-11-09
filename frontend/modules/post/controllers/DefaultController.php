@@ -3,6 +3,7 @@
 namespace frontend\modules\post\controllers;
 
 use frontend\models\Post;
+use frontend\models\User;
 use frontend\modules\post\models\forms\PostForm;
 use Yii;
 use yii\web\Controller;
@@ -64,11 +65,14 @@ class DefaultController extends Controller
         throw new NotFoundHttpException();
     }
 
+    /**
+     * @return array
+     */
     public function actionLike()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        if(Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest) {
             return [
                 'success' => false,
                 'redirect' => 'login'
@@ -82,16 +86,19 @@ class DefaultController extends Controller
         $post->like($currentUser);
 
         return [
-          'success' => true,
+            'success' => true,
             'likeCount' => $post->countLikes()
         ];
     }
 
+    /**
+     * @return array
+     */
     public function actionUnlike()
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
 
-        if(Yii::$app->user->isGuest) {
+        if (Yii::$app->user->isGuest) {
             return [
                 'success' => false,
                 'redirect' => 'login'
@@ -109,4 +116,32 @@ class DefaultController extends Controller
             'likeCount' => $post->countLikes()
         ];
     }
+
+
+    /**
+     * @return array
+     * @throws NotFoundHttpException
+     */
+    public function actionComplaint()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $id = Yii::$app->request->post('id');
+        $currentUser = Yii::$app->user->identity;
+        $post = $this->findPost($id);
+
+        if ($post->complaint($currentUser)) {
+            return [
+                'message' => 'Post is reported',
+                'success' => true
+            ];
+        }
+
+        return [
+            'message' => 'error',
+            'success' => false
+        ];
+
+    }
+
+
 }

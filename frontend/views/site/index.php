@@ -45,14 +45,15 @@ $this->title = 'Instagram';
                             </div>
                         </a>
 
-                        <div class="article-created_at">
-                            <?= Yii::$app->formatter->asDate($item->post_created_at) ?>
-                        </div>
-                        <div class="likes-count-wrapper">
-                            Likes: <span id="like-counter-<?= $item->post_id ?>"><?= $item->countLikes() ?></span>
-                        </div>
+
+
 
                         <div class="buttons-group">
+
+                            <div class="likes-count-wrapper">
+                                Likes: <span id="like-counter-<?= $item->post_id ?>"><?= $item->countLikes() ?></span>
+                            </div>
+
                             <a class="liked-btn <?= $item->isLikeBy($currentUser) ? '' : 'hidden' ?>"  id="button-unlike" data-id="<?= $item->post_id ?>">
                                 <i class="fas fa-heart"></i>
                             </a>
@@ -62,9 +63,18 @@ $this->title = 'Instagram';
                             </a>
 
 
-                            <a >
-                                report post
-                            </a>
+                            <?php if( !$item->isReported($currentUser) ) : ?>
+                                <a class="btn report-btn" data-id="<?= $item->post_id ?>">
+                                    Report
+                                    <i class="fas fa-spinner fa-spin" id="report-preloader" style="display: none"></i>
+                                </a>
+                            <?php else: ?>
+                            <span>This post is reported</span>
+                            <?php endif; ?>
+
+                            <div class="article-created_at">
+                                <?= Yii::$app->formatter->asDate($item->post_created_at) ?>
+                            </div>
                         </div>
                         <hr>
 
@@ -78,6 +88,8 @@ $this->title = 'Instagram';
 
 <?php
 $this->registerJsFile('@web/js/post-like.js');
+$this->registerJsFile('@web/js/post-complaints.js');
+
 
 
 
